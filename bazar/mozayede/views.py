@@ -45,7 +45,7 @@ class AddOffer(generics.UpdateAPIView):
         my_customer = Customer.objects.get(user = my_user)
         my_auction.last_customer = my_customer
         my_auction.current_price = given_price
-        end_datetime = datetime.combine(timezone.now().date(), my_auction.end_date)
+        end_datetime = datetime.combine(datetime.today(), my_auction.end_date)
         new_end_datetime = end_datetime + timedelta(minutes=10)
 
         # Update only the time part
