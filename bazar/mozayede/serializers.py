@@ -16,3 +16,8 @@ class AuctionSerializer(ModelSerializer):
     class Meta:
         model = Auction
         fields = '__all__'
+
+class CustomerOfferSerializer(ModelSerializer):
+    class Meta:
+        model = Auction
+        fields = ['current_price']
