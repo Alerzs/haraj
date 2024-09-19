@@ -2,13 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Customer(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User ,on_delete=models.CASCADE)
 
 class Provider(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User ,on_delete=models.CASCADE)
 
 class Auction(models.Model):
-    start_price =models.IntegerField()
+    start_price =models.IntegerField(default=0)
     current_price =models.IntegerField(default=start_price ,blank=True,null=True)
     mahsool = models.CharField(max_length=15)
     start_date = models.TimeField(auto_now_add=True)

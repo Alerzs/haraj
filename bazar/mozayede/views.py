@@ -9,9 +9,11 @@ from rest_framework.exceptions import ValidationError
 from .serializers import AuctionSerializer , CustomerOfferSerializer
 from django.utils import timezone
 from datetime import timedelta
+import datetime
 
 
-
+class Login(TokenObtainPairView):
+    pass
 class NewAuction(generics.ListCreateAPIView):
     queryset = Auction.objects.all()
     serializer_class = AuctionSerializer
