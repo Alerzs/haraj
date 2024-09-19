@@ -9,11 +9,11 @@ from rest_framework.exceptions import ValidationError
 from .serializers import AuctionSerializer , CustomerOfferSerializer
 from django.utils import timezone
 from datetime import timedelta
-<<<<<<< HEAD
 import datetime
-=======
+import requests
+import json
 from datetime import datetime, time
->>>>>>> fda8e4fd7acb61dd1f1994a8b73c30235f9f0890
+
 
 
 class Login(TokenObtainPairView):
@@ -52,8 +52,14 @@ class AddOffer(generics.UpdateAPIView):
         my_auction.current_price = given_price
         end_datetime = datetime.combine(datetime.today(), my_auction.end_date)
         new_end_datetime = end_datetime + timedelta(minutes=10)
-
-        # Update only the time part
+        year = datetime.year()
+        month = datetime.month()
+        day = datetime.day()
+        response = requests.get(f"https://holidayapi.ir/jalali/{year}/{month}/{day}")
+        response = json.loads(response)
+        holiday  = response.get('is_holiday')
+        if holiday:
+            raise ValidationError("today is holiday")
         my_auction.end_date = new_end_datetime.time()
 
         super().perform_update(serializer)
