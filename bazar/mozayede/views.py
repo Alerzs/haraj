@@ -9,6 +9,7 @@ from rest_framework.exceptions import ValidationError
 from .serializers import AuctionSerializer , CustomerOfferSerializer
 from django.utils import timezone
 from datetime import timedelta
+from datetime import datetime, time
 
 
 
@@ -44,7 +45,10 @@ class AddOffer(generics.UpdateAPIView):
         my_customer = Customer.objects.get(user = my_user)
         my_auction.last_customer = my_customer
         my_auction.current_price = given_price
-        new_end_date = my_auction.end_date + timedelta(minutes=10)
-        if new_end_date <= timezone.now() + timedelta(hours=24):  # Example limit: 24 hours from now
-            my_auction.end_date = new_end_date
-        return super().perform_update(serializer)
+        end_datetime = datetime.combine(timezone.now().date(), my_auction.end_date)
+        new_end_datetime = end_datetime + timedelta(minutes=10)
+
+        # Update only the time part
+        my_auction.end_date = new_end_datetime.time()
+
+        super().perform_update(serializer)
