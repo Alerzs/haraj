@@ -9,7 +9,11 @@ from rest_framework.exceptions import ValidationError
 from .serializers import AuctionSerializer , CustomerOfferSerializer
 from django.utils import timezone
 from datetime import timedelta
+<<<<<<< HEAD
 import datetime
+=======
+from datetime import datetime, time
+>>>>>>> fda8e4fd7acb61dd1f1994a8b73c30235f9f0890
 
 
 class Login(TokenObtainPairView):
@@ -46,5 +50,10 @@ class AddOffer(generics.UpdateAPIView):
         my_customer = Customer.objects.get(user = my_user)
         my_auction.last_customer = my_customer
         my_auction.current_price = given_price
-        my_auction.end_date += timedelta(minutes=10)
-        return super().perform_update(serializer)
+        end_datetime = datetime.combine(timezone.now().date(), my_auction.end_date)
+        new_end_datetime = end_datetime + timedelta(minutes=10)
+
+        # Update only the time part
+        my_auction.end_date = new_end_datetime.time()
+
+        super().perform_update(serializer)
