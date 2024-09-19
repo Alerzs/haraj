@@ -4,8 +4,14 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
     user = models.OneToOneField(User)
 
+    def __str__(self):
+        return self.user.username
+
 class Provider(models.Model):
     user = models.OneToOneField(User)
+
+    def __str__(self):
+        return self.user.username
 
 class Auction(models.Model):
     start_price =models.IntegerField()
@@ -15,5 +21,7 @@ class Auction(models.Model):
     end_date = models.TimeField(blank=True , null= True)
     provider = models.ForeignKey(Provider , on_delete=models.CASCADE ,related_name="prov")
     last_customer = models.ForeignKey(Customer , on_delete=models.CASCADE ,related_name="cust")
+    def __str__(self):
+        return self.mahsool
 
 
