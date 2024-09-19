@@ -8,12 +8,9 @@ from .permission import IsCustomer , IsProvider
 from rest_framework.exceptions import ValidationError
 from .serializers import AuctionSerializer , CustomerOfferSerializer
 from django.utils import timezone
-from datetime import timedelta
-<<<<<<< HEAD
 import datetime
-=======
-from datetime import datetime, time
->>>>>>> fda8e4fd7acb61dd1f1994a8b73c30235f9f0890
+from datetime import datetime, time ,timedelta
+
 
 
 class Login(TokenObtainPairView):
